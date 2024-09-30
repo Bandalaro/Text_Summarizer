@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Results</title>
+    <style>
+        /* Reset and basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #2980b9;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        /* Center content on larger screens */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            a {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Processing Results</h1>
+
+        <!-- Display summaries -->
+        <h2>Summary</h2>
+        <p>{{ summary }}</p>
+
+        <h2>Extended Summary</h2>
+        <p>{{ ext_summary }}</p>
+
+        <!-- Display feedback from microphone input if available -->
+        {% if feedback_command %}
+        <h2>Microphone Input Feedback</h2>
+        <p>{{ feedback_command }}</p>
+        {% endif %}
+
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio and URL Processing</title>
+    <style>
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding-left: 250px; /* Space for sidebar */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+
+        input[type="file"], input[type="text"], textarea, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #2c3e50;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        select {
+            background-color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #2c3e50;
+            padding-top: 20px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #ecf0f1;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .menu-icon, .logout-icon {
+            width: 24px;
+            margin-right: 10px;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 600px) {
+            body {
+                padding-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            form {
+                padding: 15px;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+    </style>
+    <script>
+        function validateAudioForm() {
+            const fileInput = document.getElementById('file');
+            if (!fileInput.value) {
+                alert('Please select an audio or video file to upload.');
+                return false;
+            }
+            return true;
+        }
+
+        function validateURLForm() {
+            const urlInput = document.getElementById('url');
+            if (!urlInput.value) {
+                alert('Please enter a URL to process.');
+                return false;
+            }
+            return true;
+        }
+
+        function validateTextForm() {
+            const textInput = document.getElementById('text');
+            if (!textInput.value.trim()) {
+                alert('Please enter some text to summarize and analyze.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#home"><img src="./home-icon.png" alt="Home" class="menu-icon">Home</a></li>
+            <li><a href="#settings"><img src="./settings-icon.png" alt="Settings" class="menu-icon">Settings</a></li>
+            <li><a href="#about"><img src="./about-icon.png" alt="About" class="menu-icon">About</a></li>
+            <li><a href="#logout"><img src="./logout.jpg" alt="Logout" class="logout-icon">Logout</a></li>
+        </ul>
+    </aside>
+
+    <h1>Welcome to the Audio and URL Processing App</h1>
+
+    <!-- Form to upload and process audio or video -->
+    <form action="/audio" method="post" enctype="multipart/form-data" onsubmit="return validateAudioForm()">
+        <h2>Upload Audio</h2>
+        <label for="file">Choose an audio or video file:</label>
+        <input type="file" id="file" name="file" accept="audio/*,video/*" required>
+
+        <!-- Dropdown for language selection -->
+        <label for="lang1">Select Language:</label>
+        <select id="lang1" name="lang1" required>
+            <option value="en">English</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+            <option value="ta">Tamil</option>
+            <option value="hi">Hindi</option>
+        </select>
+
+        <button type="submit">Upload and Process</button>
+    </form>
+
+    <!-- Form to process a URL -->
+    <form action="/url" method="post" onsubmit="return validateURLForm()">
+        <h2>Process URL</h2>
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url" placeholder="Enter URL" required>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <!-- Form to process text input -->
+    <form action="/model" method="post" onsubmit="return validateTextForm()">
+        <h2>Summarize and Analyze Text</h2>
+        <label for="text">Enter Text:</label>
+        <textarea id="text" name="text" rows="4" cols="50" required></textarea>
+        
+        <!-- Dropdown for translation language selection -->
+        <label for="lang">Translate Summary to:</label>
+        <select id="lang" name="lang" required>
+            <option value="en">English</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+            <option value="ta">Tamil</option>
+            <option value="hi">Hindi</option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
